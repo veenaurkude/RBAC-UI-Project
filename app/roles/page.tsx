@@ -4,9 +4,17 @@ import { useState, useEffect } from 'react'
 import { RoleManagement } from '@/components/role-management'
 import { mockFetchRoles, mockFetchPermissions } from '@/lib/mock-api'
 
+interface Role {
+  id: number;
+  name: string;
+  permissions: string[];
+}
+
+type Permission = string;
+
 export default function RolesPage() {
-  const [roles, setRoles] = useState([])
-  const [permissions, setPermissions] = useState([])
+  const [roles, setRoles] = useState<Role[]>([])
+  const [permissions, setPermissions] = useState<Permission[]>([])
 
   useEffect(() => {
     const fetchData = async () => {

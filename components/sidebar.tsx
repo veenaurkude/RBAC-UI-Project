@@ -9,12 +9,11 @@ export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleSidebar = () => setIsOpen(!isOpen)
-
-  return (
+z  return (
     <>
       <Button
-        variant="none"
-        size={15}
+        variant="default"
+        size="icon"
         className="fixed top-3 left-3 z-50 md:hidden"
         onClick={toggleSidebar}
         aria-label="Toggle sidebar"

@@ -1,39 +1,48 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-import { fetchUsers, addUser, updateUser, deleteUser } from '@/lib/mock-api'
+import { addUser, updateUser, deleteUser } from '@/lib/mock-api'
 
-export function UserManagement({ roles }) {
-  const [users, setUsers] = useState([])
-  const [newUser, setNewUser] = useState({ name: '', email: '', role: '', status: 'Active' })
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+}
+
+interface Role {
+  id: number;
+  name: string;
+  permissions: string[];
+}
+
+interface UserManagementProps {
+  users: User[];
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  roles: Role[];
+}
+
+export function UserManagement({ users, setUsers, roles }: UserManagementProps) {
+  const [newUser, setNewUser] = useState<Omit<User, 'id'>>({ name: '', email: '', role: '', status: 'Active' })
   const [searchTerm, setSearchTerm] = useState('')
-  const [isDialogOpen, setIsDialogOpen] = useState(false) 
-
-  useEffect(() => {
-    const loadUsers = async () => {
-      const fetchedUsers = await fetchUsers()
-      setUsers(fetchedUsers)
-    }
-    loadUsers()
-  }, [])
 
   const handleAddUser = async () => {
     const addedUser = await addUser(newUser)
     setUsers([...users, addedUser])
     setNewUser({ name: '', email: '', role: '', status: 'Active' })
-    setIsDialogOpen(false) 
   }
 
-  const handleUpdateUser = async (id, field, value) => {
+  const handleUpdateUser = async (id: number, field: keyof User, value: string) => {
     const updatedUser = await updateUser(id, { [field]: value })
     setUsers(users.map(user => user.id === id ? { ...user, ...updatedUser } : user))
   }
 
-  const handleDeleteUser = async (id) => {
+  const handleDeleteUser = async (id: number) => {
     await deleteUser(id)
     setUsers(users.filter(user => user.id !== id))
   }
@@ -53,9 +62,9 @@ export function UserManagement({ roles }) {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="max-w-sm"
         />
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <Dialog>
           <DialogTrigger asChild>
-            <Button onClick={() => setIsDialogOpen(true)}>Add User</Button>
+            <Button>Add User</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -153,3 +162,4 @@ export function UserManagement({ roles }) {
     </div>
   )
 }
+

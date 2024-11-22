@@ -4,8 +4,16 @@ import { useState, useEffect } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 
+// Define the type for a log entry
+interface LogEntry {
+  id: number;
+  action: string;
+  details: string;
+  timestamp: string;
+}
+
 // Mock audit log data
-const mockAuditLogs = [
+const mockAuditLogs: LogEntry[] = [
   { id: 1, action: 'User Created', details: 'New user "Alice" created', timestamp: '2023-05-01 10:30:00' },
   { id: 2, action: 'Role Updated', details: 'Added "delete" permission to "Editor" role', timestamp: '2023-05-02 14:45:00' },
   { id: 3, action: 'Permission Deleted', details: 'Removed "archive" permission', timestamp: '2023-05-03 09:15:00' },
@@ -13,7 +21,7 @@ const mockAuditLogs = [
 ]
 
 export default function AuditLogPage() {
-  const [logs, setLogs] = useState([])
+  const [logs, setLogs] = useState<LogEntry[]>([])
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {

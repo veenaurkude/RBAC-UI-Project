@@ -1,27 +1,30 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { mockFetchPermissions, mockAddPermission, mockDeletePermission, mockFetchRoles, mockUpdateRole } from '@/lib/mock-api'
+import { mockAddPermission, mockDeletePermission, mockUpdateRole } from '@/lib/mock-api'
 
-export function PermissionManagement() {
-  const [permissions, setPermissions] = useState([])
-  const [roles, setRoles] = useState([])
+interface Role {
+  id: number;
+  name: string;
+  permissions: string[];
+}
+
+type Permission = string;
+
+interface PermissionManagementProps {
+  permissions: Permission[];
+  setPermissions: React.Dispatch<React.SetStateAction<Permission[]>>;
+  roles: Role[];
+  setRoles: React.Dispatch<React.SetStateAction<Role[]>>;
+}
+
+export function PermissionManagement({ permissions, setPermissions, roles, setRoles }: PermissionManagementProps) {
   const [newPermission, setNewPermission] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
-
-  useEffect(() => {
-    const loadData = async () => {
-      const fetchedPermissions = await mockFetchPermissions()
-      const fetchedRoles = await mockFetchRoles()
-      setPermissions(fetchedPermissions)
-      setRoles(fetchedRoles)
-    }
-    loadData()
-  }, [])
 
   const handleAddPermission = async () => {
     if (newPermission && !permissions.includes(newPermission)) {
@@ -31,7 +34,7 @@ export function PermissionManagement() {
     }
   }
 
-  const handleDeletePermission = async (permission) => {
+  const handleDeletePermission = async (permission: Permission) => {
     await mockDeletePermission(permission)
     setPermissions(permissions.filter(p => p !== permission))
     // Remove the permission from all roles
@@ -45,13 +48,15 @@ export function PermissionManagement() {
     setRoles(updatedRoles)
   }
 
-  const handleUpdateRolePermission = async (roleId, permission) => {
+  const handleUpdateRolePermission = async (roleId: number, permission: Permission) => {
     const role = roles.find(r => r.id === roleId)
-    const updatedPermissions = role.permissions.includes(permission)
-      ? role.permissions.filter(p => p !== permission)
-      : [...role.permissions, permission]
-    const updatedRole = await mockUpdateRole(roleId, { permissions: updatedPermissions })
-    setRoles(roles.map(r => r.id === roleId ? updatedRole : r))
+    if (role) {
+      const updatedPermissions = role.permissions.includes(permission)
+        ? role.permissions.filter(p => p !== permission)
+        : [...role.permissions, permission]
+      const updatedRole = await mockUpdateRole(roleId, { permissions: updatedPermissions })
+      setRoles(roles.map(r => r.id === roleId ? updatedRole : r))
+    }
   }
 
   const filteredPermissions = permissions.filter(permission => 

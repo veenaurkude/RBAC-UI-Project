@@ -4,9 +4,24 @@ import { useState, useEffect } from 'react'
 import { UserManagement } from '@/components/user-management'
 import { fetchUsers, mockFetchRoles } from '@/lib/mock-api'
 
+// Define types for User and Role
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+}
+
+interface Role {
+  id: number;
+  name: string;
+  permissions: string[];
+}
+
 export default function UsersPage() {
-  const [users, setUsers] = useState([])
-  const [roles, setRoles] = useState([])
+  const [users, setUsers] = useState<User[]>([])
+  const [roles, setRoles] = useState<Role[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +35,7 @@ export default function UsersPage() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6 pl-8 md:pl-0">User Management</h1>
+      <h1 className="text-3xl font-bold mb-6">User Management</h1>
       <UserManagement users={users} setUsers={setUsers} roles={roles} />
     </div>
   )

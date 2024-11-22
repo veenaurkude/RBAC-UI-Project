@@ -1,42 +1,48 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-import { mockFetchRoles, mockAddRole, mockUpdateRole, mockDeleteRole } from '@/lib/mock-api'
+import { mockAddRole, mockUpdateRole, mockDeleteRole } from '@/lib/mock-api'
 
-export function RoleManagement({ permissions }) {
-  const [roles, setRoles] = useState([])
-  const [newRole, setNewRole] = useState({ name: '', permissions: [] })
+interface Role {
+  id: number;
+  name: string;
+  permissions: string[];
+}
+
+type Permission = string;
+
+interface RoleManagementProps {
+  roles: Role[];
+  setRoles: React.Dispatch<React.SetStateAction<Role[]>>;
+  permissions: Permission[];
+}
+
+export function RoleManagement({ roles, setRoles, permissions }: RoleManagementProps) {
+  const [newRole, setNewRole] = useState<Omit<Role, 'id'>>({ name: '', permissions: [] })
   const [searchTerm, setSearchTerm] = useState('')
-
-  useEffect(() => {
-    const loadRoles = async () => {
-      const fetchedRoles = await mockFetchRoles()
-      setRoles(fetchedRoles)
-    }
-    loadRoles()
-  }, [])
 
   const handleAddRole = async () => {
     const addedRole = await mockAddRole(newRole)
     setRoles([...roles, addedRole])
     setNewRole({ name: '', permissions: [] })
-
   }
 
-  const handleUpdateRolePermission = async (roleId, permission) => {
+  const handleUpdateRolePermission = async (roleId: number, permission: Permission) => {
     const role = roles.find(r => r.id === roleId)
-    const updatedPermissions = role.permissions.includes(permission)
-      ? role.permissions.filter(p => p !== permission)
-      : [...role.permissions, permission]
-    const updatedRole = await mockUpdateRole(roleId, { permissions: updatedPermissions })
-    setRoles(roles.map(r => r.id === roleId ? updatedRole : r))
+    if (role) {
+      const updatedPermissions = role.permissions.includes(permission)
+        ? role.permissions.filter(p => p !== permission)
+        : [...role.permissions, permission]
+      const updatedRole = await mockUpdateRole(roleId, { permissions: updatedPermissions })
+      setRoles(roles.map(r => r.id === roleId ? updatedRole : r))
+    }
   }
 
-  const handleDeleteRole = async (id) => {
+  const handleDeleteRole = async (id: number) => {
     await mockDeleteRole(id)
     setRoles(roles.filter(role => role.id !== id))
   }
