@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { PermissionManagement } from '@/components/permission-management'
+import { PermissionManagement } from '@/components/permission'
 import { mockFetchPermissions, mockFetchRoles } from '@/lib/mock-api'
 
 interface Role {

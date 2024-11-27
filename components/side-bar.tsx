@@ -9,7 +9,7 @@ export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleSidebar = () => setIsOpen(!isOpen)
-z  return (
+  return (
     <>
       <Button
         variant="default"
@@ -22,7 +22,7 @@ z  return (
         <Menu className={`h-4 w-4 ${isOpen ? "text-white" : ""} `} />
       </Button> 
       <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-gray-900 text-white p-6 transform transition-transform duration-300 pt-8 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
-        <h1 className="text-2xl font-bold mb-8">RBAC Dashboard</h1>
+        <h1 className="text-2xl font-bold mb-8">RBAC UI Project</h1>
         <nav>
           <ul className="space-y-4">
             <li>

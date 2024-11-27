@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { UserManagement } from '@/components/user-management'
+import { UserManagement } from '@/components/user'
 import { fetchUsers, mockFetchRoles } from '@/lib/mock-api'
 
 // Define types for User and Role

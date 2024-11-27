@@ -1,6 +1,6 @@
-# RBAC UI Dashboard
+# RBAC-UI Project
 
-Live Deploy Link - https://rbacdashboardbyabhay.netlify.app/
+Live Deploy Link - 
 
 ## Overview
 
@@ -36,9 +36,8 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
 
-git clone [https://github.com/MrAbhayKumawat/rbac-ui-dashboard.git](https://github.com/MrAbhayKumawat/rbac-ui-dashboard.git)
-cd rbac-ui-dashboard
-
+git clone 
+cd RBAC-UI project
 
 3. Install shadcn/ui components:
 
@@ -53,7 +52,7 @@ To start the development server:
 
 
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+Open http://localhost:3000 in your browser to view the application.
 
 ## Project Structure
 
@@ -71,10 +70,10 @@ rbac-ui-dashboard/
 ├── components/
 │   ├── ui/
 │   │   └── ... (shadcn/ui components)
-│   ├── user-management.tsx
-│   ├── role-management.tsx
-│   ├── permission-management.tsx
-│   └── sidebar.tsx
+│   ├── user.tsx
+│   ├── role.tsx
+│   ├── permission.tsx
+│   └── side-bar.tsx
 ├── lib/
 │   └── mock-api.ts
 ├── public/
@@ -111,7 +110,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgements
 
@@ -123,4 +122,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-For support, please open an issue in the GitHub repository or contact [mrabhaykumawat9@gmail.com](mailto:mrabhaykumawat9@gmail.com).
+For support, please open an issue in the GitHub repository or contact on veenaurkude10@gmail.com.

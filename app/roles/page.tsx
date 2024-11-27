@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { RoleManagement } from '@/components/role-management'
+import { RoleManagement } from '@/components/role'
 import { mockFetchRoles, mockFetchPermissions } from '@/lib/mock-api'
 
 interface Role {
