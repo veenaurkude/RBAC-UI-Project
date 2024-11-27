@@ -1,6 +1,6 @@
 # RBAC-UI Project
 
-Live Deploy Link - 
+Live Deploy Link - https://rbac-ui-project.netlify.app/
 
 ## Overview
 
@@ -41,16 +41,12 @@ cd RBAC-UI project
 
 3. Install shadcn/ui components:
 
-
-
 4. Set up your environment variables:
 Create a `.env.local` file in the root directory and add any necessary environment variables.
 
 ## Running the Application
 
 To start the development server:
-
-
 
 Open http://localhost:3000 in your browser to view the application.
 
